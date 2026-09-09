@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AURELIA — WEAR THE MOMENT. | Luxury Fashion Editorial</title>
+    <meta name="description"
+        content="AURELIA — Wear The Moment. Curated luxury fashion, architectural silhouettes, French linen shirts, silk slip gowns, and Italian tailoring.">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- External Custom Styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body
+    class="bg-[#faf8f5] text-[#0f0e0d] font-sans-body min-h-screen flex flex-col antialiased selection:bg-[#c5a059] selection:text-white overflow-x-hidden">
+
+    <!-- Desktop Custom Cursor -->
+    <div id="custom-cursor" class="hidden md:block"></div>
+    <div id="cursor-follower" class="hidden md:block"></div>
+
+    <!-- Top Scroll Progress Bar -->
+    <div id="scroll-progress"></div>
+
+    <!-- Announcement Bar -->
+    <div
+        class="bg-[#0f0e0d] text-[#e6e0d4] px-4 py-2 text-center text-[10px] sm:text-xs font-medium tracking-editorial uppercase shadow-sm">
+        <div class="container mx-auto max-w-7xl flex items-center justify-between">
+            <div class="mx-auto flex items-center gap-3">
+                <span>✨ COMPLIMENTARY EXPRESS SHIPPING ON ORDERS ABOVE ₹4,990</span>
+                <span class="hidden md:inline">• EASY 7-DAY RETURNS</span>
+                <span class="bg-[#c5a059] text-[#0f0e0d] font-bold px-2 py-0.5 rounded-sm ml-2">PROMO CODE:
+                    AURELIA10</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ultra-Clean Header -->
+    <header id="main-header" class="sticky top-0 nav-header z-40 px-4 sm:px-8 py-4">
+        <div class="container mx-auto max-w-7xl flex items-center justify-between gap-4">
+
+            <!-- Left: Brand Logo -->
+            <a href="index.html" class="flex flex-col group cursor-pointer">
+                <span
+                    class="font-serif-title font-bold text-2xl sm:text-3xl tracking-widest text-[#0f0e0d] group-hover:text-[#c5a059] transition duration-300">
+                    A U R E L I A
+                </span>
+                <span class="text-[8px] font-bold text-[#8c857b] tracking-editorial uppercase leading-none">
+                    WEAR THE MOMENT.
+                </span>
+            </a>
+
+            <!-- Center Navigation Links -->
+            <nav
+                class="hidden lg:flex items-center gap-8 text-xs font-semibold uppercase tracking-editorial text-[#0f0e0d]">
+                <button type="button" onclick="filterProductCategory('women')"
+                    class="link-underline hover:text-[#c5a059] transition cursor-pointer">Women</button>
+                <button type="button" onclick="filterProductCategory('men')"
+                    class="link-underline hover:text-[#c5a059] transition cursor-pointer">Men</button>
+                <button type="button" onclick="filterProductCategory('kids')"
+                    class="link-underline hover:text-[#c5a059] transition cursor-pointer">Kids</button>
+                <button type="button" onclick="filterProductCategory('all')"
+                    class="link-underline hover:text-[#c5a059] transition cursor-pointer">Collections</button>
+                <button type="button" onclick="filterProductCategory('new')"
+                    class="text-[#c5a059] font-bold link-underline hover:text-[#0f0e0d] transition cursor-pointer flex items-center gap-1.5">
+                    <span>New Arrivals</span> <span class="w-1.5 h-1.5 rounded-full bg-[#c5a059] animate-pulse"></span>
+                </button>
+            </nav>
+
+            <!-- Right Action Icons -->
+            <div class="flex items-center gap-5 text-[#0f0e0d]">
+
+                <!-- Search Button Trigger -->
+                <button type="button" onclick="toggleSearchOverlay(true)"
+                    class="p-1 hover:text-[#c5a059] transition cursor-pointer flex items-center gap-2 text-xs font-medium"
+                    aria-label="Search">
+                    <i class="fas fa-search text-base"></i>
+                    <span class="hidden xl:inline tracking-widest uppercase">Search</span>
+                </button>
+
+                <!-- User Account Button -->
+                <button type="button" onclick="toggleAccountDrawer(true)"
+                    class="p-1 hover:text-[#c5a059] transition cursor-pointer" aria-label="Account">
+                    <i class="far fa-user text-base"></i>
+                </button>
+
+                <!-- Wishlist Button -->
+                <button type="button" onclick="toggleWishlistDrawer(true)"
+                    class="relative p-1 hover:text-[#c5a059] transition cursor-pointer" aria-label="Wishlist">
+                    <i class="far fa-heart text-base"></i>
+                    <span id="wishlist-count-badge"
+                        class="absolute -top-1.5 -right-2 bg-[#c5a059] text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">0</span>
+                </button>
+
+                <!-- Cart Button -->
+                <button type="button" onclick="toggleCartDrawer(true)"
+                    class="relative p-1 hover:text-[#c5a059] transition cursor-pointer" aria-label="Shopping Bag">
+                    <i class="fas fa-shopping-bag text-base"></i>
+                    <span id="cart-count-badge"
+                        class="absolute -top-1.5 -right-2 bg-[#0f0e0d] text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">0</span>
+                </button>
+
+                <!-- Mobile Hamburger Button -->
+                <button type="button" onclick="toggleMobileMenu()"
+                    class="lg:hidden p-1 hover:text-[#c5a059] transition cursor-pointer" aria-label="Menu">
+                    <i class="fas fa-bars text-lg"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Drawer Navigation -->
+        <div id="mobile-menu"
+            class="hidden lg:hidden pt-4 pb-2 border-t border-[#e6e1d6] mt-3 space-y-3 text-xs font-semibold uppercase tracking-editorial text-[#0f0e0d]">
+            <button onclick="toggleMobileMenu(); filterProductCategory('women');"
+                class="block w-full text-left py-1 hover:text-[#c5a059]">Women's Collection</button>
+            <button onclick="toggleMobileMenu(); filterProductCategory('men');"
+                class="block w-full text-left py-1 hover:text-[#c5a059]">Men's Collection</button>
+            <button onclick="toggleMobileMenu(); filterProductCategory('kids');"
+                class="block w-full text-left py-1 hover:text-[#c5a059]">Junior Collection</button>
+            <button onclick="toggleMobileMenu(); filterProductCategory('all');"
+                class="block w-full text-left py-1 hover:text-[#c5a059]">All Collections</button>
+            <button onclick="toggleMobileMenu(); filterProductCategory('new');"
+                class="block w-full text-left py-1 text-[#c5a059]">New Arrivals 2026</button>
+        </div>
+    </header>
+
+    <main class="space-y-24 pb-24">
+
+        <!-- HERO — CINEMATIC FIRST IMPRESSION -->
+        <section
+            class="relative w-full min-h-[85vh] sm:min-h-[90vh] flex items-center justify-center overflow-hidden bg-[#0f0e0d]">
+            <!-- Background Image with Parallax Zoom -->
+            <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1800&q=80"
+                alt="Aurelia Hero Model"
+                class="absolute inset-0 w-full h-full object-cover hero-image-animate opacity-70">
+
+            <div class="absolute inset-0 bg-gradient-to-t from-[#0f0e0d] via-[#0f0e0d]/30 to-transparent"></div>
+
+            <div class="relative z-10 container mx-auto max-w-5xl px-6 text-center text-white space-y-6 fade-in-up">
+                <span class="text-[10px] sm:text-xs font-bold text-[#c5a059] uppercase tracking-editorial block">
+                    COLLECTION 01 / 2026
+                </span>
+
+                <h1 class="font-serif-title text-4xl sm:text-7xl xl:text-8xl font-normal leading-none tracking-tight">
+                    THE NEW SILHOUETTE
+                </h1>
+
+                <p class="text-xs sm:text-sm text-[#e6e0d4] max-w-lg mx-auto font-light leading-relaxed">
+                    Curated silhouettes designed for everyday elegance, effortless transitions and quiet confidence.
+                </p>
+
+                <div class="flex flex-wrap items-center justify-center gap-4 pt-4">
+                    <button type="button" onclick="filterProductCategory('all')"
+                        class="bg-[#faf8f5] hover:bg-[#c5a059] text-[#0f0e0d] hover:text-white font-medium text-xs px-8 py-3.5 tracking-editorial uppercase transition-all duration-300 cursor-pointer">
+                        DISCOVER COLLECTION →
+                    </button>
+
+                    <button type="button" onclick="filterProductCategory('new')"
+                        class="border border-[#faf8f5]/40 hover:border-[#faf8f5] text-[#faf8f5] font-medium text-xs px-8 py-3.5 tracking-editorial uppercase transition duration-300 cursor-pointer">
+                        SHOP NEW ARRIVALS
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 01 — EDITORIAL STORYTELLING SPREAD -->
+        <section class="container mx-auto px-6 max-w-7xl">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+
+                <!-- Left: Editorial Spread Headline & Text -->
+                <div class="lg:col-span-5 space-y-6">
+                    <span class="text-[10px] font-bold text-[#c5a059] uppercase tracking-editorial">CURATED COLLECTION —
+                        2026</span>
+
+                    <h2 class="font-serif-title text-3xl sm:text-5xl font-normal leading-tight text-[#0f0e0d]">
+                        THE ART OF <br>
+                        EVERYDAY DRESSING.
+                    </h2>
+
+                    <p class="text-xs sm:text-sm text-[#57534e] leading-relaxed font-light">
+                        AURELIA explores the balance between form and ease. Each garment is considered for its movement,
+                        tactile richness, and quiet presence in daily life.
+                    </p>
+
+                    <div
+                        class="pt-4 border-t border-[#e6e1d6] flex items-center justify-between text-xs font-semibold tracking-editorial">
+                        <span class="text-[#0f0e0d]">01 / ARCHIVAL LINEN & SILK</span>
+                        <button onclick="filterProductCategory('women')"
+                            class="text-[#c5a059] hover:underline cursor-pointer">EXPLORE EDIT →</button>
+                    </div>
+                </div>
+
+                <!-- Right: Asymmetric Image Spread -->
+                <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div class="space-y-4">
+                        <div class="w-full aspect-[3/4] overflow-hidden bg-[#f5f2eb]">
+                            <img src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=800&q=80"
+                                alt="Editorial Look 1"
+                                class="w-full h-full object-cover hover:scale-105 transition duration-700">
+                        </div>
+                        <div class="text-center sm:text-left space-y-1">
+                            <span class="text-[9px] font-bold text-[#8c857b] tracking-editorial uppercase">LOOK
+                                04</span>
+                            <h4 class="font-serif-title text-base font-normal text-[#0f0e0d]">Linen Draped Shirt &
+                                Trouser</h4>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4 sm:mt-12">
+                        <div class="w-full aspect-[3/4] overflow-hidden bg-[#f5f2eb]">
+                            <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=800&q=80"
+                                alt="Editorial Look 2"
+                                class="w-full h-full object-cover hover:scale-105 transition duration-700">
+                        </div>
+                        <div class="text-center sm:text-left space-y-1">
+                            <span class="text-[9px] font-bold text-[#8c857b] tracking-editorial uppercase">LOOK
+                                07</span>
+                            <h4 class="font-serif-title text-base font-normal text-[#0f0e0d]">Silk Organza Pleated Midi
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 02 — NEW ARRIVALS -->
+        <section id="new-arrivals-section" class="container mx-auto px-6 max-w-7xl space-y-8">
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between border-b border-[#e6e1d6] pb-4 gap-4">
+                <div>
+                    <h2 class="font-serif-title text-3xl sm:text-4xl font-normal text-[#0f0e0d]">NEW ARRIVALS</h2>
+                    <p class="text-xs text-[#8c857b] tracking-wide mt-1">"Pieces designed for the season ahead."</p>
+                </div>
+                <button type="button" onclick="filterProductCategory('new')"
+                    class="text-xs font-semibold tracking-editorial uppercase text-[#0f0e0d] hover:text-[#c5a059] transition cursor-pointer">
+                    VIEW ALL →
+                </button>
+            </div>
+
+            <div id="new-arrivals-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Populated dynamically by script.js -->
+            </div>
+        </section>
+
+        <!-- SECTION 03 — EDITORIAL COLLECTION BANNER -->
+        <section class="w-full bg-[#0f0e0d] text-white py-20 px-6 relative overflow-hidden">
+            <div class="absolute inset-0 opacity-40">
+                <img src="https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=1800&q=80"
+                    alt="Evening Edit Banner" class="w-full h-full object-cover">
+            </div>
+
+            <div class="relative z-10 container mx-auto max-w-4xl text-center space-y-6">
+                <span class="text-[10px] font-bold text-[#c5a059] uppercase tracking-editorial block">AUTUMN / WINTER
+                    EDITORIAL</span>
+                <h3 class="font-serif-title text-4xl sm:text-6xl font-normal leading-tight">THE EVENING EDIT</h3>
+                <p class="text-xs sm:text-sm text-[#e6e0d4] max-w-md mx-auto font-light leading-relaxed">"Designed for
+                    moments that deserve more." Heavy silk charmeuse, tailored barathea wool, and hand-worked detailing.
+                </p>
+                <div>
+                    <button type="button" onclick="filterProductCategory('women')"
+                        class="bg-[#faf8f5] hover:bg-[#c5a059] text-[#0f0e0d] hover:text-white font-medium text-xs px-8 py-3.5 tracking-editorial uppercase transition-all duration-300 cursor-pointer">
+                        EXPLORE EVENING →
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 04 — CATEGORY EXPERIENCE PANELS -->
+        <section class="container mx-auto px-6 max-w-7xl space-y-6">
+            <div class="text-center space-y-1">
+                <span class="text-[10px] font-bold text-[#c5a059] uppercase tracking-editorial">CATEGORIES</span>
+                <h2 class="font-serif-title text-3xl sm:text-4xl font-normal text-[#0f0e0d]">EXPLORE COLLECTIONS</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Panel 1: WOMEN -->
+                <div onclick="filterProductCategory('women')"
+                    class="group relative aspect-[3/4] overflow-hidden bg-[#f5f2eb] cursor-pointer">
+                    <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=800&q=80"
+                        alt="Women Category"
+                        class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-[#0f0e0d]/80 via-transparent to-transparent flex flex-col justify-end p-8 text-white">
+                        <span class="text-[9px] font-bold text-[#c5a059] uppercase tracking-editorial mb-1">COLLECTION
+                            01</span>
+                        <h4 class="font-serif-title text-3xl font-normal">WOMEN</h4>
+                        <span
+                            class="text-xs font-semibold tracking-editorial uppercase text-[#e6e0d4] mt-2 group-hover:translate-x-1 transition">EXPLORE
+                            →</span>
+                    </div>
+                </div>
+
+                <!-- Panel 2: MEN -->
+                <div onclick="filterProductCategory('men')"
+                    class="group relative aspect-[3/4] overflow-hidden bg-[#f5f2eb] cursor-pointer">
+                    <img src="https://images.unsplash.com/photo-1617137984095-74e4e5e3613f?auto=format&fit=crop&w=800&q=80"
+                        alt="Men Category"
+                        class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-[#0f0e0d]/80 via-transparent to-transparent flex flex-col justify-end p-8 text-white">
+                        <span class="text-[9px] font-bold text-[#c5a059] uppercase tracking-editorial mb-1">COLLECTION
+                            02</span>
+                        <h4 class="font-serif-title text-3xl font-normal">MEN</h4>
+                        <span
+                            class="text-xs font-semibold tracking-editorial uppercase text-[#e6e0d4] mt-2 group-hover:translate-x-1 transition">EXPLORE
+                            →</span>
+                    </div>
+                </div>
+
+                <!-- Panel 3: KIDS -->
+                <div onclick="filterProductCategory('kids')"
+                    class="group relative aspect-[3/4] overflow-hidden bg-[#f5f2eb] cursor-pointer">
+                    <img src="https://images.unsplash.com/photo-1621452773781-0f992fd1f5cb?auto=format&fit=crop&w=800&q=80"
+                        alt="Kids Category"
+                        class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-[#0f0e0d]/80 via-transparent to-transparent flex flex-col justify-end p-8 text-white">
+                        <span class="text-[9px] font-bold text-[#c5a059] uppercase tracking-editorial mb-1">JUNIOR
+                            EDIT</span>
+                        <h4 class="font-serif-title text-3xl font-normal">KIDS</h4>
+                        <span
+                            class="text-xs font-semibold tracking-editorial uppercase text-[#e6e0d4] mt-2 group-hover:translate-x-1 transition">EXPLORE
+                            →</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 05 — PRODUCT CATALOG & ESSENTIAL PIECES -->
+        <section id="products" class="container mx-auto px-6 max-w-7xl space-y-8">
+
+            <div class="flex flex-col md:flex-row md:items-end justify-between border-b border-[#e6e1d6] pb-4 gap-4">
+                <div>
+                    <h2 class="font-serif-title text-3xl sm:text-4xl font-normal text-[#0f0e0d]">ESSENTIAL PIECES</h2>
+                    <p class="text-xs text-[#8c857b] tracking-wide mt-1">Considered designs crafted for everyday
+                        longevity.</p>
+                </div>
+
+                <!-- Filter Controls -->
+                <div class="flex flex-wrap items-center gap-4">
+                    <div class="flex items-center gap-2 bg-[#f5f2eb] border border-[#e6e1d6] px-3 py-1.5">
+                        <label for="price-range"
+                            class="text-[11px] font-semibold uppercase tracking-wider text-[#57534e]">Max Price:</label>
+                        <input type="range" id="price-range" min="2000" max="30000" step="1000" value="30000"
+                            oninput="document.getElementById('price-val').textContent = '₹' + parseInt(this.value).toLocaleString('en-IN'); renderProductGrid();"
+                            class="w-24 accent-[#c5a059] cursor-pointer">
+                        <span id="price-val" class="text-xs font-mono font-bold text-[#0f0e0d]">₹30,000</span>
+                    </div>
+
+                    <select id="sort-select" onchange="renderProductGrid()"
+                        class="bg-[#f5f2eb] border border-[#e6e1d6] text-[#0f0e0d] text-xs font-semibold tracking-wider uppercase px-3 py-2 focus:outline-none cursor-pointer">
+                        <option value="recommended">Sort: Recommended</option>
+                        <option value="price-low">Price: Low → High</option>
+                        <option value="price-high">Price: High → Low</option>
+                        <option value="rating">Highest Rated</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Category Filter Pills -->
+            <div class="flex flex-wrap gap-3">
+                <button type="button"
+                    class="product-filter-btn active text-xs font-semibold tracking-editorial uppercase px-4 py-2 bg-[#0f0e0d] text-white transition"
+                    data-filter="all">All Products</button>
+                <button type="button"
+                    class="product-filter-btn text-xs font-semibold tracking-editorial uppercase px-4 py-2 bg-[#f5f2eb] text-[#0f0e0d] hover:bg-[#e6e0d4] transition"
+                    data-filter="women">Women</button>
+                <button type="button"
+                    class="product-filter-btn text-xs font-semibold tracking-editorial uppercase px-4 py-2 bg-[#f5f2eb] text-[#0f0e0d] hover:bg-[#e6e0d4] transition"
+                    data-filter="men">Men</button>
+                <button type="button"
+                    class="product-filter-btn text-xs font-semibold tracking-editorial uppercase px-4 py-2 bg-[#f5f2eb] text-[#0f0e0d] hover:bg-[#e6e0d4] transition"
+                    data-filter="kids">Kids</button>
+                <button type="button"
+                    class="product-filter-btn text-xs font-semibold tracking-editorial uppercase px-4 py-2 bg-[#f5f2eb] text-[#0f0e0d] hover:bg-[#e6e0d4] transition"
+                    data-filter="shoes">Shoes</button>
+                <button type="button"
+                    class="product-filter-btn text-xs font-semibold tracking-editorial uppercase px-4 py-2 bg-[#f5f2eb] text-[#0f0e0d] hover:bg-[#e6e0d4] transition"
+                    data-filter="accessories">Accessories</button>
+                <button type="button"
+                    class="product-filter-btn text-xs font-semibold tracking-editorial uppercase px-4 py-2 bg-[#f5f2eb] text-[#0f0e0d] hover:bg-[#e6e0d4] transition"
+                    data-filter="new">New Arrivals</button>
+            </div>
+
+            <!-- Main Product Grid -->
+            <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Populated dynamically by script.js -->
+            </div>
+        </section>
+
+        <!-- SECTION 06 — LUXURY BRAND STORY -->
+        <section class="container mx-auto px-6 max-w-6xl py-12 border-t border-b border-[#e6e1d6]">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div class="w-full aspect-[4/3] bg-[#f5f2eb] overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=800&q=80"
+                        alt="Brand Craftsmanship" class="w-full h-full object-cover">
+                </div>
+
+                <div class="space-y-6">
+                    <span class="text-[10px] font-bold text-[#c5a059] uppercase tracking-editorial block">OUR
+                        PHILOSOPHY</span>
+                    <h3 class="font-serif-title text-4xl sm:text-5xl font-normal text-[#0f0e0d]">"LESS, BUT BETTER."
+                    </h3>
+                    <p class="text-xs sm:text-sm text-[#57534e] font-light leading-relaxed">
+                        AURELIA is built around considered design, exceptional materials and effortless silhouettes. We
+                        reject fast trends in favor of quiet luxury that endures.
+                    </p>
+                    <button type="button" onclick="filterProductCategory('all')"
+                        class="text-xs font-semibold tracking-editorial uppercase text-[#0f0e0d] link-underline cursor-pointer">
+                        DISCOVER OUR STORY →
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FULL-SCREEN LUXURY SEARCH OVERLAY -->
+    <div id="search-overlay"
+        class="fixed inset-0 bg-[#faf8f5]/98 backdrop-blur-md z-50 hidden opacity-0 flex flex-col p-6 sm:p-12 overflow-y-auto">
+        <div class="container mx-auto max-w-4xl space-y-8">
+            <div class="flex justify-between items-center border-b border-[#e6e1d6] pb-4">
+                <span class="text-xs font-semibold tracking-editorial uppercase text-[#c5a059]">SEARCH AURELIA</span>
+                <button type="button" onclick="toggleSearchOverlay(false)"
+                    class="text-[#0f0e0d] text-2xl p-2 hover:text-[#c5a059] cursor-pointer" aria-label="Close Search">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <!-- Search Input -->
+            <div class="relative">
+                <input type="text" id="search-input-overlay"
+                    placeholder="Type to search silk dresses, linen shirts, leather shoes..."
+                    class="w-full bg-transparent border-b-2 border-[#0f0e0d] text-xl sm:text-3xl font-serif-title text-[#0f0e0d] placeholder-[#8c857b] py-3 focus:outline-none focus:border-[#c5a059]">
+                <i class="fas fa-search absolute right-2 top-1/2 -translate-y-1/2 text-[#8c857b] text-xl"></i>
+            </div>
+
+            <!-- Suggestions / Recent Searches -->
+            <div class="space-y-4">
+                <span class="text-[10px] font-bold text-[#8c857b] uppercase tracking-editorial block">POPULAR
+                    SEARCHES</span>
+                <div class="flex flex-wrap gap-2 text-xs font-semibold uppercase tracking-wider text-[#0f0e0d]">
+                    <button onclick="setSearchQuery('Linen Shirt')"
+                        class="px-3 py-1.5 bg-[#f5f2eb] hover:bg-[#e6e0d4]">Linen Shirt</button>
+                    <button onclick="setSearchQuery('Silk Gown')"
+                        class="px-3 py-1.5 bg-[#f5f2eb] hover:bg-[#e6e0d4]">Silk Gown</button>
+                    <button onclick="setSearchQuery('Cashmere')"
+                        class="px-3 py-1.5 bg-[#f5f2eb] hover:bg-[#e6e0d4]">Cashmere Knit</button>
+                    <button onclick="setSearchQuery('Tuxedo')" class="px-3 py-1.5 bg-[#f5f2eb] hover:bg-[#e6e0d4]">Wool
+                        Tuxedo</button>
+                    <button onclick="setSearchQuery('Oxford')"
+                        class="px-3 py-1.5 bg-[#f5f2eb] hover:bg-[#e6e0d4]">Oxford Shoes</button>
+                </div>
+            </div>
+
+            <!-- Live Results Grid -->
+            <div id="search-results-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 pt-4">
+                <!-- Dynamically injected -->
+            </div>
+        </div>
+    </div>
+
+    <!-- RIGHT-SIDE SHOPPING CART DRAWER -->
+    <div id="cart-drawer-overlay" onclick="toggleCartDrawer(false)"
+        class="fixed inset-0 bg-[#0f0e0d]/60 backdrop-blur-xs z-50 hidden transition-opacity"></div>
+    <div id="cart-drawer"
+        class="drawer-panel fixed top-0 right-0 h-full w-full max-w-md bg-[#faf8f5] border-l border-[#e6e1d6] shadow-2xl z-50 transform translate-x-full hidden flex flex-col">
+
+        <div class="p-6 border-b border-[#e6e1d6] flex justify-between items-center">
+            <h3 class="text-sm font-semibold tracking-editorial uppercase text-[#0f0e0d]">YOUR BAG</h3>
+            <button type="button" onclick="toggleCartDrawer(false)"
+                class="text-[#57534e] hover:text-[#0f0e0d] p-1 cursor-pointer">
+                <i class="fas fa-times text-lg"></i>
+            </button>
+        </div>
+
+        <!-- Free Shipping Progress -->
+        <div class="bg-[#f5f2eb] px-6 py-3 border-b border-[#e6e1d6] text-xs">
+            <div id="free-shipping-msg" class="font-medium text-[#0f0e0d] mb-1">Add ₹4,990 more for complimentary
+                shipping</div>
+            <div class="w-full bg-[#e6e0d4] h-1.5 rounded-full overflow-hidden">
+                <div id="free-shipping-bar" class="bg-[#c5a059] h-full w-0 transition-all duration-300"></div>
+            </div>
+        </div>
+
+        <!-- Cart Items Container -->
+        <div id="cart-items" class="flex-grow p-6 overflow-y-auto space-y-4">
+            <!-- Dynamically injected -->
+        </div>
+
+        <!-- Cart Footer -->
+        <div class="p-6 border-t border-[#e6e1d6] bg-[#faf8f5] space-y-4">
+
+            <!-- Coupon Code Input -->
+            <div class="flex gap-2">
+                <input type="text" id="coupon-input" placeholder="Coupon (e.g. AURELIA10)"
+                    class="flex-grow bg-[#f5f2eb] border border-[#e6e1d6] px-3 py-2 text-xs font-mono uppercase focus:outline-none focus:border-[#0f0e0d]">
+                <button type="button" onclick="applyCouponCode()"
+                    class="bg-[#0f0e0d] text-white font-semibold text-xs px-4 py-2 hover:bg-[#c5a059] transition cursor-pointer">
+                    APPLY
+                </button>
+            </div>
+            <div id="applied-coupon-msg" class="hidden text-[11px] font-semibold"></div>
+
+            <div class="space-y-2 text-xs text-[#57534e] pt-2 border-t border-[#e6e1d6]">
+                <div class="flex justify-between"><span>SUBTOTAL:</span><span id="cart-subtotal-val"
+                        class="font-mono text-[#0f0e0d]">₹0</span></div>
+                <div class="flex justify-between text-[#c5a059]"><span>COUPON DISCOUNT:</span><span
+                        id="cart-discount-val" class="font-mono">-₹0</span></div>
+                <div class="flex justify-between"><span>SHIPPING:</span><span id="cart-delivery-val"
+                        class="font-mono text-[#0f0e0d]">COMPLIMENTARY</span></div>
+                <div class="flex justify-between font-bold text-sm text-[#0f0e0d] pt-2 border-t border-[#e6e1d6]">
+                    <span>TOTAL:</span>
+                    <span id="cart-total-val" class="font-mono">₹0</span>
+                </div>
+            </div>
+
+            <button type="button" onclick="openCheckoutModal()"
+                class="w-full bg-[#0f0e0d] hover:bg-[#c5a059] text-white font-medium text-xs py-4 tracking-editorial uppercase transition duration-300 cursor-pointer">
+                CHECKOUT →
+            </button>
+        </div>
+    </div>
+
+    <!-- RIGHT-SIDE WISHLIST DRAWER -->
+    <div id="wishlist-drawer-overlay" onclick="toggleWishlistDrawer(false)"
+        class="fixed inset-0 bg-[#0f0e0d]/60 backdrop-blur-xs z-50 hidden transition-opacity"></div>
+    <div id="wishlist-drawer"
+        class="drawer-panel fixed top-0 right-0 h-full w-full max-w-md bg-[#faf8f5] border-l border-[#e6e1d6] shadow-2xl z-50 transform translate-x-full hidden flex flex-col">
+        <div class="p-6 border-b border-[#e6e1d6] flex justify-between items-center">
+            <h3 class="text-sm font-semibold tracking-editorial uppercase text-[#0f0e0d]">SAVED PIECES</h3>
+            <button type="button" onclick="toggleWishlistDrawer(false)"
+                class="text-[#57534e] hover:text-[#0f0e0d] p-1 cursor-pointer">
+                <i class="fas fa-times text-lg"></i>
+            </button>
+        </div>
+        <div id="wishlist-items" class="flex-grow p-6 overflow-y-auto space-y-4">
+            <!-- Dynamically injected -->
+        </div>
+    </div>
+
+    <!-- USER ACCOUNT DRAWER -->
+    <div id="account-drawer-overlay" onclick="toggleAccountDrawer(false)"
+        class="fixed inset-0 bg-[#0f0e0d]/60 backdrop-blur-xs z-50 hidden transition-opacity"></div>
+    <div id="account-drawer"
+        class="drawer-panel fixed top-0 right-0 h-full w-full max-w-sm bg-[#faf8f5] border-l border-[#e6e1d6] shadow-2xl z-50 transform translate-x-full hidden flex flex-col p-6 space-y-6">
+        <div class="flex justify-between items-center border-b border-[#e6e1d6] pb-4">
+            <h3 class="text-sm font-semibold tracking-editorial uppercase text-[#0f0e0d]">CLIENT ACCOUNT</h3>
+            <button type="button" onclick="toggleAccountDrawer(false)"
+                class="text-[#57534e] hover:text-[#0f0e0d] p-1 cursor-pointer">
+                <i class="fas fa-times text-lg"></i>
+            </button>
+        </div>
+
+        <div id="account-content" class="space-y-4 flex-grow">
+            <!-- Dynamically injected -->
+        </div>
+    </div>
+
+    <!-- QUICK VIEW MODAL -->
+    <div id="quickview-modal"
+        class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-[#0f0e0d]/80 backdrop-blur-xs overflow-y-auto">
+        <div
+            class="bg-[#faf8f5] border border-[#e6e1d6] p-8 max-w-3xl w-full relative max-h-[90vh] overflow-y-auto shadow-2xl modal-animate-enter">
+            <button type="button" onclick="closeQuickView()"
+                class="absolute top-4 right-4 text-[#0f0e0d] hover:text-[#c5a059] text-xl z-10 cursor-pointer">
+                <i class="fas fa-times"></i>
+            </button>
+            <div id="quickview-modal-content">
+                <!-- Dynamically injected -->
+            </div>
+        </div>
+    </div>
+
+    <!-- CHECKOUT MODAL -->
+    <div id="checkout-modal"
+        class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-[#0f0e0d]/80 backdrop-blur-xs overflow-y-auto">
+        <div
+            class="bg-[#faf8f5] border border-[#e6e1d6] p-8 max-w-2xl w-full relative max-h-[92vh] overflow-y-auto shadow-2xl space-y-6 modal-animate-enter">
+            <div class="flex justify-between items-center border-b border-[#e6e1d6] pb-4">
+                <h3 class="text-sm font-semibold tracking-editorial uppercase text-[#0f0e0d]">EXPRESS CHECKOUT</h3>
+                <button type="button" onclick="closeCheckoutModal()"
+                    class="text-[#57534e] hover:text-[#0f0e0d] p-1 cursor-pointer">
+                    <i class="fas fa-times text-lg"></i>
+                </button>
+            </div>
+
+            <form id="checkout-form" onsubmit="handlePlaceOrder(event)" class="space-y-6">
+                <!-- Step 1 & 2 -->
+                <div class="space-y-4 bg-[#f5f2eb] p-6 border border-[#e6e1d6]">
+                    <h4 class="text-xs font-semibold tracking-editorial uppercase text-[#c5a059]">01 INFORMATION &
+                        DELIVERY</h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                        <div>
+                            <label class="block font-medium mb-1">FULL NAME</label>
+                            <input type="text" required placeholder="e.g. Vikram Malhotra"
+                                class="w-full bg-[#faf8f5] border border-[#e6e1d6] px-3 py-2 focus:outline-none focus:border-[#0f0e0d]">
+                        </div>
+                        <div>
+                            <label class="block font-medium mb-1">MOBILE</label>
+                            <input type="tel" required placeholder="e.g. 9876543210"
+                                class="w-full bg-[#faf8f5] border border-[#e6e1d6] px-3 py-2 focus:outline-none focus:border-[#0f0e0d]">
+                        </div>
+                        <div class="sm:col-span-2">
+                            <label class="block font-medium mb-1">ADDRESS</label>
+                            <input type="text" required placeholder="e.g. Flat 12B, Aurelia Towers, Worli"
+                                class="w-full bg-[#faf8f5] border border-[#e6e1d6] px-3 py-2 focus:outline-none focus:border-[#0f0e0d]">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="space-y-4 bg-[#f5f2eb] p-6 border border-[#e6e1d6]">
+                    <h4 class="text-xs font-semibold tracking-editorial uppercase text-[#c5a059]">02 PAYMENT METHOD</h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs font-medium">
+                        <label class="flex items-center gap-2 bg-[#faf8f5] p-3 border border-[#e6e1d6] cursor-pointer">
+                            <input type="radio" name="payment" value="upi" checked class="accent-[#c5a059]">
+                            <span>UPI / GPay</span>
+                        </label>
+                        <label class="flex items-center gap-2 bg-[#faf8f5] p-3 border border-[#e6e1d6] cursor-pointer">
+                            <input type="radio" name="payment" value="card" class="accent-[#c5a059]">
+                            <span>Credit/Debit Card</span>
+                        </label>
+                        <label class="flex items-center gap-2 bg-[#faf8f5] p-3 border border-[#e6e1d6] cursor-pointer">
+                            <input type="radio" name="payment" value="cod" class="accent-[#c5a059]">
+                            <span>Cash on Delivery</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between bg-[#f5f2eb] p-4 border border-[#e6e1d6] text-xs">
+                    <div>
+                        <span class="text-[#57534e] block">TOTAL PAYABLE:</span>
+                        <span id="checkout-total-val" class="text-lg font-mono font-bold text-[#0f0e0d]">₹0</span>
+                    </div>
+                    <button type="submit"
+                        class="bg-[#0f0e0d] hover:bg-[#c5a059] text-white font-medium text-xs px-8 py-3.5 tracking-editorial uppercase transition duration-300 cursor-pointer">
+                        PLACE ORDER →
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ORDER CONFIRMATION SUCCESS MODAL -->
+    <div id="order-confirmation-modal"
+        class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-[#0f0e0d]/80 backdrop-blur-xs">
+        <div class="bg-[#faf8f5] border border-[#e6e1d6] p-8 max-w-md w-full text-center space-y-6 modal-animate-enter">
+            <div
+                class="w-16 h-16 rounded-full bg-[#c5a059]/20 text-[#c5a059] flex items-center justify-center text-3xl mx-auto">
+                <i class="fas fa-check"></i>
+            </div>
+            <h3 class="font-serif-title text-3xl font-normal text-[#0f0e0d]">ORDER CONFIRMED</h3>
+            <p class="text-xs text-[#57534e] font-light leading-relaxed">Thank you for shopping with AURELIA. Your order
+                has been placed and is being hand-prepared.</p>
+
+            <div class="bg-[#f5f2eb] p-4 border border-[#e6e1d6] text-xs space-y-2 text-left font-mono">
+                <div class="flex justify-between"><span class="text-[#8c857b]">REFERENCE:</span><span id="conf-order-id"
+                        class="text-[#0f0e0d] font-bold">AUR-2026-847291</span></div>
+                <div class="flex justify-between"><span class="text-[#8c857b]">ESTIMATED DELIVERY:</span><span
+                        class="text-[#c5a059] font-bold">2–4 Business Days</span></div>
+            </div>
+
+            <button type="button" onclick="closeOrderConfirmation()"
+                class="w-full bg-[#0f0e0d] hover:bg-[#c5a059] text-white font-medium text-xs py-3.5 tracking-editorial uppercase transition cursor-pointer">
+                CONTINUE SHOPPING →
+            </button>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-[#0f0e0d] text-[#e6e0d4] py-16 text-xs">
+        <div class="container mx-auto px-6 max-w-7xl space-y-12">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8">
+
+                <div class="lg:col-span-2 space-y-4">
+                    <h4 class="font-serif-title text-2xl font-normal tracking-widest text-white">A U R E L I A</h4>
+                    <p class="text-[11px] text-[#8c857b] font-light leading-relaxed max-w-sm">AURELIA is built around
+                        considered design, exceptional materials and effortless silhouettes. Wear the moment.</p>
+                </div>
+
+                <div class="space-y-3">
+                    <h5 class="text-[10px] font-bold text-[#c5a059] uppercase tracking-editorial">SHOP</h5>
+                    <ul class="space-y-2 text-[#e6e0d4]/80">
+                        <li><a href="#products" onclick="filterProductCategory('women')"
+                                class="hover:text-white">Women</a></li>
+                        <li><a href="#products" onclick="filterProductCategory('men')" class="hover:text-white">Men</a>
+                        </li>
+                        <li><a href="#products" onclick="filterProductCategory('kids')"
+                                class="hover:text-white">Kids</a></li>
+                        <li><a href="#products" onclick="filterProductCategory('all')"
+                                class="hover:text-white">Collections</a></li>
+                    </ul>
+                </div>
+
+                <div class="space-y-3">
+                    <h5 class="text-[10px] font-bold text-[#c5a059] uppercase tracking-editorial">CLIENT SERVICES</h5>
+                    <ul class="space-y-2 text-[#e6e0d4]/80">
+                        <li><a href="#" class="hover:text-white">Contact Us</a></li>
+                        <li><a href="#" class="hover:text-white">Shipping & Returns</a></li>
+                        <li><a href="#" class="hover:text-white">Size Guide</a></li>
+                        <li><a href="#" class="hover:text-white">Authenticity Guarantee</a></li>
+                    </ul>
+                </div>
+
+                <div class="space-y-3">
+                    <h5 class="text-[10px] font-bold text-[#c5a059] uppercase tracking-editorial">JOIN THE JOURNAL</h5>
+                    <p class="text-[11px] text-[#8c857b]">Subscribe for early collection access.</p>
+                    <form onsubmit="handleNewsletterSubmit(event)" class="space-y-2">
+                        <input type="email" required placeholder="Enter your email..."
+                            class="w-full bg-[#1a1816] border border-[#57534e]/40 px-3 py-2 text-xs text-white focus:outline-none focus:border-[#c5a059]">
+                        <button type="submit"
+                            class="w-full bg-[#c5a059] hover:bg-[#b08a43] text-[#0f0e0d] font-bold text-xs py-2 tracking-editorial uppercase transition cursor-pointer">
+                            SUBSCRIBE →
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+
+            <div
+                class="border-t border-[#1a1816] pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-[#8c857b]">
+                <p>&copy; 2026 AURELIA. WEAR THE MOMENT. All Rights Reserved.</p>
+                <div class="flex gap-4">
+                    <a href="#" class="hover:text-white">Instagram</a>
+                    <a href="#" class="hover:text-white">Pinterest</a>
+                    <a href="#" class="hover:text-white">Journal</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JS Scripts -->
+    <script src="products.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
