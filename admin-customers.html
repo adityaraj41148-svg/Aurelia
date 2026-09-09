@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Management | Admin Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body class="admin-body min-h-screen flex">
+
+    <!-- Sidebar Navigation -->
+    <aside class="w-64 admin-sidebar p-6 flex flex-col justify-between shrink-0 hidden md:flex min-h-screen">
+        <div class="space-y-8">
+            <div class="flex items-center gap-3 border-b border-slate-800 pb-6">
+                <div class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-400 font-black text-xl flex items-center justify-center">A</div>
+                <div>
+                    <h2 class="font-bold text-slate-100 text-sm tracking-widest">A U R E L I A</h2>
+                    <span class="text-[9px] font-bold text-amber-400 tracking-widest uppercase">ADMIN DASHBOARD</span>
+                </div>
+            </div>
+
+            <nav class="space-y-1">
+                <a href="admin-dashboard.html" class="admin-nav-link"><i class="fas fa-chart-pie w-5"></i> Dashboard</a>
+                <a href="admin-customers.html" class="admin-nav-link active"><i class="fas fa-users w-5"></i> Customers</a>
+                <a href="admin-products.html" class="admin-nav-link"><i class="fas fa-box w-5"></i> Products</a>
+                <a href="admin-orders.html" class="admin-nav-link"><i class="fas fa-shopping-cart w-5"></i> Orders</a>
+                <a href="admin-categories.html" class="admin-nav-link"><i class="fas fa-th-large w-5"></i> Categories</a>
+                <a href="admin-coupons.html" class="admin-nav-link"><i class="fas fa-ticket-alt w-5"></i> Coupons</a>
+                <a href="admin-reviews.html" class="admin-nav-link"><i class="fas fa-star w-5"></i> Reviews</a>
+                <a href="admin-analytics.html" class="admin-nav-link"><i class="fas fa-chart-line w-5"></i> Analytics</a>
+                <a href="admin-settings.html" class="admin-nav-link"><i class="fas fa-cog w-5"></i> Settings</a>
+            </nav>
+        </div>
+
+        <div class="pt-6 border-t border-slate-800">
+            <button onclick="handleAdminLogout()" class="w-full text-left admin-nav-link text-rose-400 hover:bg-rose-500/10">
+                <i class="fas fa-sign-out-alt w-5"></i> Admin Logout
+            </button>
+        </div>
+    </aside>
+
+    <main class="flex-grow p-6 md:p-10 space-y-8 overflow-x-hidden">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-6">
+            <div>
+                <h1 class="text-2xl font-bold text-slate-100">CUSTOMER MANAGEMENT</h1>
+                <p class="text-xs text-slate-400 mt-1">Manage registered customer accounts, view order history, and toggle statuses.</p>
+            </div>
+        </div>
+
+        <!-- Search & Filter Controls -->
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-4 bg-[#0f172a] p-4 border border-[#1e293b] rounded-2xl">
+            <div class="relative w-full sm:w-80">
+                <input type="text" id="cust-search-input" oninput="renderAdminCustomers()" placeholder="Search customer name, email, mobile..." class="w-full bg-[#020617] border border-[#1e293b] rounded-xl px-3.5 py-2 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-amber-400">
+                <i class="fas fa-search absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
+            </div>
+
+            <select id="cust-status-filter" onchange="renderAdminCustomers()" class="bg-[#020617] border border-[#1e293b] text-slate-200 text-xs font-semibold rounded-xl px-3 py-2 focus:outline-none focus:border-amber-400 cursor-pointer">
+                <option value="all">Filter: All Statuses</option>
+                <option value="active">Active Accounts</option>
+                <option value="disabled">Disabled Accounts</option>
+            </select>
+        </div>
+
+        <!-- Customers Table -->
+        <div class="admin-table-container">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Customer ID</th>
+                        <th>Full Name</th>
+                        <th>Email</th>
+                        <th>Mobile</th>
+                        <th>Reg. Date</th>
+                        <th>Account Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="admin-customers-rows">
+                    <!-- Dynamically populated by admin.js -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- Customer Profile Modal -->
+    <div id="customer-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-950/80 backdrop-blur-xs">
+        <div class="bg-[#0f172a] border border-[#1e293b] p-6 max-w-lg w-full rounded-2xl relative space-y-4 shadow-2xl">
+            <button onclick="closeCustomerModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-100 text-lg"><i class="fas fa-times"></i></button>
+            <div id="customer-modal-content"></div>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            renderAdminCustomers();
+        });
+    </script>
+</body>
+</html>

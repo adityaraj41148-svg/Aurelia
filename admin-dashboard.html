@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | AURELIA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body class="admin-body min-h-screen flex">
+
+    <!-- Sidebar Navigation -->
+    <aside class="w-64 admin-sidebar p-6 flex flex-col justify-between shrink-0 hidden md:flex min-h-screen">
+        <div class="space-y-8">
+            <div class="flex items-center gap-3 border-b border-slate-800 pb-6">
+                <div class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-400 font-black text-xl flex items-center justify-center">A</div>
+                <div>
+                    <h2 class="font-bold text-slate-100 text-sm tracking-widest">A U R E L I A</h2>
+                    <span class="text-[9px] font-bold text-amber-400 tracking-widest uppercase">ADMIN DASHBOARD</span>
+                </div>
+            </div>
+
+            <nav class="space-y-1">
+                <a href="admin-dashboard.html" class="admin-nav-link active"><i class="fas fa-chart-pie w-5"></i> Dashboard</a>
+                <a href="admin-customers.html" class="admin-nav-link"><i class="fas fa-users w-5"></i> Customers</a>
+                <a href="admin-products.html" class="admin-nav-link"><i class="fas fa-box w-5"></i> Products</a>
+                <a href="admin-orders.html" class="admin-nav-link"><i class="fas fa-shopping-cart w-5"></i> Orders</a>
+                <a href="admin-categories.html" class="admin-nav-link"><i class="fas fa-th-large w-5"></i> Categories</a>
+                <a href="admin-coupons.html" class="admin-nav-link"><i class="fas fa-ticket-alt w-5"></i> Coupons</a>
+                <a href="admin-reviews.html" class="admin-nav-link"><i class="fas fa-star w-5"></i> Reviews</a>
+                <a href="admin-analytics.html" class="admin-nav-link"><i class="fas fa-chart-line w-5"></i> Analytics</a>
+                <a href="admin-settings.html" class="admin-nav-link"><i class="fas fa-cog w-5"></i> Settings</a>
+            </nav>
+        </div>
+
+        <div class="pt-6 border-t border-slate-800">
+            <button onclick="handleAdminLogout()" class="w-full text-left admin-nav-link text-rose-400 hover:bg-rose-500/10">
+                <i class="fas fa-sign-out-alt w-5"></i> Admin Logout
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow p-6 md:p-10 space-y-8 overflow-x-hidden">
+        <!-- Top Bar -->
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-6">
+            <div>
+                <h1 class="text-2xl font-bold text-slate-100">DASHBOARD OVERVIEW</h1>
+                <p class="text-xs text-slate-400 mt-1">Real calculated store statistics and recent orders.</p>
+            </div>
+            <div class="flex items-center gap-3">
+                <a href="index.html" target="_blank" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-xl transition flex items-center gap-2">
+                    <i class="fas fa-external-link-alt"></i> View Storefront
+                </a>
+            </div>
+        </div>
+
+        <!-- Calculated Stat Cards Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="admin-stat-card">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">TOTAL REVENUE</span>
+                        <h3 id="stat-revenue" class="text-2xl font-bold font-mono text-slate-100 mt-1">₹0</h3>
+                    </div>
+                    <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center justify-center text-lg"><i class="fas fa-wallet"></i></div>
+                </div>
+            </div>
+
+            <div class="admin-stat-card">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">TOTAL ORDERS</span>
+                        <h3 id="stat-orders" class="text-2xl font-bold font-mono text-slate-100 mt-1">0</h3>
+                    </div>
+                    <div class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-400 flex items-center justify-center text-lg"><i class="fas fa-shopping-bag"></i></div>
+                </div>
+            </div>
+
+            <div class="admin-stat-card">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">TOTAL CUSTOMERS</span>
+                        <h3 id="stat-customers" class="text-2xl font-bold font-mono text-slate-100 mt-1">0</h3>
+                    </div>
+                    <div class="w-10 h-10 rounded-xl bg-sky-500/10 border border-sky-500/30 text-sky-400 flex items-center justify-center text-lg"><i class="fas fa-users"></i></div>
+                </div>
+            </div>
+
+            <div class="admin-stat-card">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">TOTAL PRODUCTS</span>
+                        <h3 id="stat-products" class="text-2xl font-bold font-mono text-slate-100 mt-1">0</h3>
+                    </div>
+                    <div class="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/30 text-purple-400 flex items-center justify-center text-lg"><i class="fas fa-box"></i></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Orders Table -->
+        <div class="space-y-4">
+            <div class="flex justify-between items-center">
+                <h3 class="text-base font-bold text-slate-100">Recent Customer Orders</h3>
+                <a href="admin-orders.html" class="text-xs text-amber-400 font-semibold hover:underline">View All Orders →</a>
+            </div>
+
+            <div class="admin-table-container">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Customer</th>
+                            <th>Items</th>
+                            <th>Total Amount</th>
+                            <th>Status</th>
+                            <th>Order Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="recent-orders-rows">
+                        <!-- Dynamically populated by admin.js -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script src="admin.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            renderAdminDashboard();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,127 @@
+<?php
+/**
+ * AURELIA Admin Portal Login
+ */
+
+if (session_status() === PHP_SESSION_NONE) {
+    ini_set('session.cookie_httponly', 1);
+    ini_set('session.use_only_cookies', 1);
+    session_start();
+}
+
+require_once __DIR__ . '/includes/db.php';
+require_once __DIR__ . '/includes/functions.php';
+
+// If already logged in, redirect to admin-dashboard.php
+if (isset($_SESSION['admin_id']) && !empty($_SESSION['admin_id'])) {
+    header('Location: admin-dashboard.php');
+    exit();
+}
+
+$error_message = '';
+$success_message = '';
+
+if (isset($_SESSION['admin_flash_error'])) {
+    $error_message = $_SESSION['admin_flash_error'];
+    unset($_SESSION['admin_flash_error']);
+}
+
+if (isset($_SESSION['admin_flash_success'])) {
+    $success_message = $_SESSION['admin_flash_success'];
+    unset($_SESSION['admin_flash_success']);
+}
+
+// Process Login POST Submission
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
+    $password = $_POST['password'] ?? '';
+
+    if (empty($email) || empty($password)) {
+        $error_message = 'Please fill in both email and password fields.';
+    } else {
+        try {
+            $db = getDB();
+            $stmt = $db->prepare("SELECT * FROM admin_users WHERE email = :email LIMIT 1");
+            $stmt->execute(['email' => trim($email)]);
+            $admin = $stmt->fetch();
+
+            if ($admin && password_verify($password, $admin['password'])) {
+                if ($admin['status'] !== 'active') {
+                    $error_message = 'Your admin account has been deactivated.';
+                } else {
+                    session_regenerate_id(true);
+                    $_SESSION['admin_id'] = $admin['id'];
+                    $_SESSION['admin_name'] = $admin['name'];
+                    $_SESSION['admin_email'] = $admin['email'];
+                    $_SESSION['admin_role'] = $admin['role'];
+
+                    header('Location: admin-dashboard.php');
+                    exit();
+                }
+            } else {
+                $error_message = 'Invalid admin credentials. Please check your email and password.';
+            }
+        } catch (Exception $e) {
+            $error_message = 'System Error: Unable to authenticate. ' . htmlspecialchars($e->getMessage());
+        }
+    }
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Portal Login | AURELIA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body class="admin-body min-h-screen flex items-center justify-center p-4">
+
+    <div class="max-w-md w-full bg-[#0f172a] border border-[#1e293b] rounded-2xl p-8 space-y-6 shadow-2xl">
+        <div class="text-center space-y-2">
+            <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-400 flex items-center justify-center text-xl font-bold mx-auto">
+                <i class="fas fa-user-shield"></i>
+            </div>
+            <h1 class="text-2xl font-bold text-slate-100 tracking-tight">AURELIA ADMIN PORTAL</h1>
+            <p class="text-xs text-slate-400">Management & Store Control System</p>
+        </div>
+
+        <?php if (!empty($error_message)): ?>
+            <div class="p-3 bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs text-center rounded-xl font-medium">
+                <i class="fas fa-exclamation-triangle mr-1.5"></i> <?= htmlspecialchars($error_message) ?>
+            </div>
+        <?php endif; ?>
+
+        <?php if (!empty($success_message)): ?>
+            <div class="p-3 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs text-center rounded-xl font-medium">
+                <i class="fas fa-check-circle mr-1.5"></i> <?= htmlspecialchars($success_message) ?>
+            </div>
+        <?php endif; ?>
+
+        <form action="admin-login.php" method="POST" class="space-y-4 text-xs">
+            <div>
+                <label class="block font-bold text-slate-300 mb-1.5 uppercase tracking-wider text-[10px]">ADMIN EMAIL</label>
+                <input type="email" name="email" required id="admin-email" value="<?= htmlspecialchars($_POST['email'] ?? 'admin@aurelia.com') ?>" class="w-full bg-[#020617] border border-[#1e293b] rounded-xl px-4 py-3 text-slate-100 focus:outline-none focus:border-amber-400">
+            </div>
+
+            <div>
+                <label class="block font-bold text-slate-300 mb-1.5 uppercase tracking-wider text-[10px]">ADMIN PASSWORD</label>
+                <input type="password" name="password" required id="admin-password" value="admin123" class="w-full bg-[#020617] border border-[#1e293b] rounded-xl px-4 py-3 text-slate-100 focus:outline-none focus:border-amber-400">
+            </div>
+
+            <div class="p-3 bg-slate-950 rounded-xl border border-slate-800 text-[11px] text-slate-400 space-y-1">
+                <p class="font-bold text-amber-400">🔑 DEMO CREDENTIALS:</p>
+                <p>Email: <code class="text-slate-200">admin@aurelia.com</code></p>
+                <p>Password: <code class="text-slate-200">admin123</code></p>
+            </div>
+
+            <button type="submit" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-xs py-3.5 rounded-xl uppercase tracking-wider transition cursor-pointer">
+                SIGN IN TO DASHBOARD →
+            </button>
+        </form>
+    </div>
+
+</body>
+</html>

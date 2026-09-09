@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Category Management | Admin Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body class="admin-body min-h-screen flex">
+
+    <aside class="w-64 admin-sidebar p-6 flex flex-col justify-between shrink-0 hidden md:flex min-h-screen">
+        <div class="space-y-8">
+            <div class="flex items-center gap-3 border-b border-slate-800 pb-6">
+                <div class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-400 font-black text-xl flex items-center justify-center">A</div>
+                <div>
+                    <h2 class="font-bold text-slate-100 text-sm tracking-widest">A U R E L I A</h2>
+                    <span class="text-[9px] font-bold text-amber-400 tracking-widest uppercase">ADMIN DASHBOARD</span>
+                </div>
+            </div>
+
+            <nav class="space-y-1">
+                <a href="admin-dashboard.html" class="admin-nav-link"><i class="fas fa-chart-pie w-5"></i> Dashboard</a>
+                <a href="admin-customers.html" class="admin-nav-link"><i class="fas fa-users w-5"></i> Customers</a>
+                <a href="admin-products.html" class="admin-nav-link"><i class="fas fa-box w-5"></i> Products</a>
+                <a href="admin-orders.html" class="admin-nav-link"><i class="fas fa-shopping-cart w-5"></i> Orders</a>
+                <a href="admin-categories.html" class="admin-nav-link active"><i class="fas fa-th-large w-5"></i> Categories</a>
+                <a href="admin-coupons.html" class="admin-nav-link"><i class="fas fa-ticket-alt w-5"></i> Coupons</a>
+                <a href="admin-reviews.html" class="admin-nav-link"><i class="fas fa-star w-5"></i> Reviews</a>
+                <a href="admin-analytics.html" class="admin-nav-link"><i class="fas fa-chart-line w-5"></i> Analytics</a>
+                <a href="admin-settings.html" class="admin-nav-link"><i class="fas fa-cog w-5"></i> Settings</a>
+            </nav>
+        </div>
+
+        <div class="pt-6 border-t border-slate-800">
+            <button onclick="handleAdminLogout()" class="w-full text-left admin-nav-link text-rose-400 hover:bg-rose-500/10">
+                <i class="fas fa-sign-out-alt w-5"></i> Admin Logout
+            </button>
+        </div>
+    </aside>
+
+    <main class="flex-grow p-6 md:p-10 space-y-8 overflow-x-hidden">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-6">
+            <div>
+                <h1 class="text-2xl font-bold text-slate-100">CATEGORY MANAGEMENT</h1>
+                <p class="text-xs text-slate-400 mt-1">Manage storefront product categories and status visibility.</p>
+            </div>
+        </div>
+
+        <div class="admin-table-container">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Category ID</th>
+                        <th>Name</th>
+                        <th>Slug</th>
+                        <th>Status</th>
+                        <th>Products Count</th>
+                    </tr>
+                </thead>
+                <tbody id="admin-categories-rows">
+                    <tr><td class="font-mono font-bold text-amber-400">CAT-01</td><td class="font-bold text-slate-100">Women</td><td>women</td><td><span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-400">ACTIVE</span></td><td>12 Products</td></tr>
+                    <tr><td class="font-mono font-bold text-amber-400">CAT-02</td><td class="font-bold text-slate-100">Men</td><td>men</td><td><span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-400">ACTIVE</span></td><td>8 Products</td></tr>
+                    <tr><td class="font-mono font-bold text-amber-400">CAT-03</td><td class="font-bold text-slate-100">Kids</td><td>kids</td><td><span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-400">ACTIVE</span></td><td>4 Products</td></tr>
+                    <tr><td class="font-mono font-bold text-amber-400">CAT-04</td><td class="font-bold text-slate-100">Shoes</td><td>shoes</td><td><span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-400">ACTIVE</span></td><td>6 Products</td></tr>
+                    <tr><td class="font-mono font-bold text-amber-400">CAT-05</td><td class="font-bold text-slate-100">Accessories</td><td>accessories</td><td><span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-400">ACTIVE</span></td><td>6 Products</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <script src="admin.js"></script>
+</body>
+</html>

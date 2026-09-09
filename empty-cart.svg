@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#EEF2FF" />
+      <stop offset="100%" stop-color="#E0E7FF" />
+    </linearGradient>
+    <linearGradient id="cartGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4F46E5" />
+      <stop offset="100%" stop-color="#7C3AED" />
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F43F5E" />
+      <stop offset="100%" stop-color="#FB7185" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#4F46E5" flood-opacity="0.18" />
+    </filter>
+    <filter id="softShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000000" flood-opacity="0.08" />
+    </filter>
+  </defs>
+
+  <!-- Background Glow & Circle -->
+  <circle cx="200" cy="140" r="110" fill="url(#bgGrad)" />
+  <circle cx="200" cy="140" r="85" fill="#FFFFFF" opacity="0.6" />
+
+  <!-- Decorative Floating Sparks & Dots -->
+  <circle cx="95" cy="80" r="6" fill="#818CF8" opacity="0.5" />
+  <circle cx="310" cy="95" r="8" fill="#F43F5E" opacity="0.4" />
+  <circle cx="110" cy="210" r="5" fill="#34D399" opacity="0.6" />
+  <circle cx="290" cy="215" r="7" fill="#F59E0B" opacity="0.5" />
+
+  <!-- Floating Sparkle 1 -->
+  <path d="M 120 110 Q 120 120 130 120 Q 120 120 120 130 Q 120 120 110 120 Q 120 120 120 110 Z" fill="#6366F1" opacity="0.7" />
+  <!-- Floating Sparkle 2 -->
+  <path d="M 280 130 Q 280 140 290 140 Q 280 140 280 150 Q 280 140 270 140 Q 280 140 280 130 Z" fill="#818CF8" opacity="0.8" />
+
+  <!-- Floor Base Shadow -->
+  <ellipse cx="200" cy="245" rx="85" ry="12" fill="#C7D2FE" opacity="0.6" />
+
+  <!-- Main Shopping Cart Group -->
+  <g filter="url(#shadow)">
+    <!-- Cart Wheels -->
+    <circle cx="160" cy="235" r="14" fill="#312E81" />
+    <circle cx="160" cy="235" r="6" fill="#FFFFFF" />
+
+    <circle cx="240" cy="235" r="14" fill="#312E81" opacity="0.9" />
+    <circle cx="240" cy="235" r="6" fill="#FFFFFF" />
+
+    <!-- Basket Body -->
+    <path d="M 130 110 L 150 195 C 152 205 160 210 170 210 L 235 210 C 245 210 252 204 255 195 L 275 125 C 277 117 271 110 262 110 Z" fill="url(#cartGrad)" />
+    
+    <!-- Inner Basket Grid Accents (Empty Mesh look) -->
+    <path d="M 145 135 L 265 135 M 150 160 L 260 160 M 155 185 L 250 185" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" opacity="0.3" />
+    <path d="M 180 120 L 175 200 M 210 120 L 207 200 M 240 120 L 236 195" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" opacity="0.25" />
+
+    <!-- Cart Front Rail Rim -->
+    <path d="M 125 110 L 272 110" stroke="#4338CA" stroke-width="6" stroke-linecap="round" />
+
+    <!-- Cart Handle Base & Tube -->
+    <path d="M 128 110 L 112 75 C 110 70 104 66 98 66 L 85 66" stroke="#312E81" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+    <circle cx="85" cy="66" r="6" fill="#4F46E5" />
+  </g>
+
+  <!-- Empty Tag Badge Floating above Cart -->
+  <g transform="translate(170, 70)" filter="url(#softShadow)">
+    <rect x="0" y="0" width="60" height="34" rx="10" fill="url(#accentGrad)" />
+    <text x="30" y="22" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="bold" fill="#FFFFFF" text-anchor="middle">0</text>
+  </g>
+</svg>

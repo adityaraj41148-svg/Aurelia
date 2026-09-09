@@ -1,0 +1,11 @@
+/* Responsive Design Adjustments */
+@media (max-width: 640px) {
+    .hero-slider {
+        height: 50vh;
+    }
+    .ai-assistant-panel {
+        right: 12px;
+        bottom: 80px;
+        width: calc(100vw - 24px);
+    }
+}

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Catalog Management | Admin Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body class="admin-body min-h-screen flex">
+
+    <!-- Sidebar Navigation -->
+    <aside class="w-64 admin-sidebar p-6 flex flex-col justify-between shrink-0 hidden md:flex min-h-screen">
+        <div class="space-y-8">
+            <div class="flex items-center gap-3 border-b border-slate-800 pb-6">
+                <div class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-400 font-black text-xl flex items-center justify-center">A</div>
+                <div>
+                    <h2 class="font-bold text-slate-100 text-sm tracking-widest">A U R E L I A</h2>
+                    <span class="text-[9px] font-bold text-amber-400 tracking-widest uppercase">ADMIN DASHBOARD</span>
+                </div>
+            </div>
+
+            <nav class="space-y-1">
+                <a href="admin-dashboard.html" class="admin-nav-link"><i class="fas fa-chart-pie w-5"></i> Dashboard</a>
+                <a href="admin-customers.html" class="admin-nav-link"><i class="fas fa-users w-5"></i> Customers</a>
+                <a href="admin-products.html" class="admin-nav-link active"><i class="fas fa-box w-5"></i> Products</a>
+                <a href="admin-orders.html" class="admin-nav-link"><i class="fas fa-shopping-cart w-5"></i> Orders</a>
+                <a href="admin-categories.html" class="admin-nav-link"><i class="fas fa-th-large w-5"></i> Categories</a>
+                <a href="admin-coupons.html" class="admin-nav-link"><i class="fas fa-ticket-alt w-5"></i> Coupons</a>
+                <a href="admin-reviews.html" class="admin-nav-link"><i class="fas fa-star w-5"></i> Reviews</a>
+                <a href="admin-analytics.html" class="admin-nav-link"><i class="fas fa-chart-line w-5"></i> Analytics</a>
+                <a href="admin-settings.html" class="admin-nav-link"><i class="fas fa-cog w-5"></i> Settings</a>
+            </nav>
+        </div>
+
+        <div class="pt-6 border-t border-slate-800">
+            <button onclick="handleAdminLogout()" class="w-full text-left admin-nav-link text-rose-400 hover:bg-rose-500/10">
+                <i class="fas fa-sign-out-alt w-5"></i> Admin Logout
+            </button>
+        </div>
+    </aside>
+
+    <main class="flex-grow p-6 md:p-10 space-y-8 overflow-x-hidden">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-6">
+            <div>
+                <h1 class="text-2xl font-bold text-slate-100">PRODUCT MANAGEMENT</h1>
+                <p class="text-xs text-slate-400 mt-1">Add, edit, delete products and adjust inventory stock levels.</p>
+            </div>
+            <button onclick="openAddProductModal()" class="px-4 py-2.5 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-xs rounded-xl transition flex items-center gap-2 cursor-pointer">
+                <i class="fas fa-plus"></i> ADD NEW PRODUCT
+            </button>
+        </div>
+
+        <!-- Search & Filter Controls -->
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-4 bg-[#0f172a] p-4 border border-[#1e293b] rounded-2xl">
+            <div class="relative w-full sm:w-80">
+                <input type="text" id="prod-search-input" oninput="renderAdminProducts()" placeholder="Search product name, brand, ID..." class="w-full bg-[#020617] border border-[#1e293b] rounded-xl px-3.5 py-2 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-amber-400">
+                <i class="fas fa-search absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
+            </div>
+
+            <select id="prod-cat-filter" onchange="renderAdminProducts()" class="bg-[#020617] border border-[#1e293b] text-slate-200 text-xs font-semibold rounded-xl px-3 py-2 focus:outline-none focus:border-amber-400 cursor-pointer">
+                <option value="all">Filter: All Categories</option>
+                <option value="women">Women</option>
+                <option value="men">Men</option>
+                <option value="kids">Kids</option>
+                <option value="shoes">Shoes</option>
+                <option value="accessories">Accessories</option>
+            </select>
+        </div>
+
+        <!-- Products Table -->
+        <div class="admin-table-container">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Product & Brand</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Stock Qty</th>
+                        <th>Badge</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="admin-products-rows">
+                    <!-- Dynamically populated by admin.js -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- Add Product Modal -->
+    <div id="product-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-950/80 backdrop-blur-xs">
+        <div class="bg-[#0f172a] border border-[#1e293b] p-6 max-w-lg w-full rounded-2xl relative space-y-4 shadow-2xl">
+            <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                <h3 class="text-sm font-bold text-slate-100 uppercase tracking-wider">ADD NEW PRODUCT</h3>
+                <button onclick="closeProductModal()" class="text-slate-400 hover:text-slate-100"><i class="fas fa-times"></i></button>
+            </div>
+
+            <form onsubmit="handleSaveProduct(event)" class="space-y-3 text-xs">
+                <div>
+                    <label class="block font-bold text-slate-300 mb-1">PRODUCT NAME</label>
+                    <input type="text" required id="prod-form-name" placeholder="e.g. Archival Wool Barathea Blazer" class="w-full bg-[#020617] border border-[#1e293b] rounded-xl px-3 py-2 text-slate-100">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-bold text-slate-300 mb-1">BRAND</label>
+                        <input type="text" required id="prod-form-brand" value="AURELIA STUDIO" class="w-full bg-[#020617] border border-[#1e293b] rounded-xl px-3 py-2 text-slate-100">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-300 mb-1">CATEGORY</label>
+                        <select id="prod-form-category" class="w-full bg-[#020617] border border-[#1e293b] rounded-xl px-3 py-2 text-slate-100">
+                            <option value="women">Women</option>
+                            <option value="men">Men</option>
+                            <option value="kids">Kids</option>
+                            <option value="shoes">Shoes</option>
+                            <option value="accessories">Accessories</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="grid grid-cols-3 gap-3">
+                    <div>
+                        <label class="block font-bold text-slate-300 mb-1">SALE PRICE (₹)</label>
+                        <input type="number" required id="prod-form-price" placeholder="7990" class="w-full bg-[#020617] border border-[#1e293b] rounded-xl px-3 py-2 text-slate-100">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-300 mb-1">ORIGINAL PRICE</label>
+                        <input type="number" id="prod-form-orig-price" placeholder="11990" class="w-full bg-[#020617] border border-[#1e293b] rounded-xl px-3 py-2 text-slate-100">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-300 mb-1">STOCK QTY</label>
+                        <input type="number" required id="prod-form-stock" value="25" class="w-full bg-[#020617] border border-[#1e293b] rounded-xl px-3 py-2 text-slate-100">
+                    </div>
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-300 mb-1">IMAGE URL</label>
+                    <input type="url" id="prod-form-image" placeholder="https://images.unsplash.com/..." class="w-full bg-[#020617] border border-[#1e293b] rounded-xl px-3 py-2 text-slate-100">
+                </div>
+
+                <div class="pt-3 border-t border-slate-800 flex justify-end gap-3">
+                    <button type="button" onclick="closeProductModal()" class="px-4 py-2 bg-slate-800 text-slate-300 rounded-xl">Cancel</button>
+                    <button type="submit" class="px-5 py-2 bg-amber-500 text-slate-950 font-bold rounded-xl">SAVE PRODUCT</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            renderAdminProducts();
+        });
+    </script>
+</body>
+</html>

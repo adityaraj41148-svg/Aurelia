@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Analytics | Admin Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body class="admin-body min-h-screen flex">
+
+    <aside class="w-64 admin-sidebar p-6 flex flex-col justify-between shrink-0 hidden md:flex min-h-screen">
+        <div class="space-y-8">
+            <div class="flex items-center gap-3 border-b border-slate-800 pb-6">
+                <div class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-400 font-black text-xl flex items-center justify-center">A</div>
+                <div>
+                    <h2 class="font-bold text-slate-100 text-sm tracking-widest">A U R E L I A</h2>
+                    <span class="text-[9px] font-bold text-amber-400 tracking-widest uppercase">ADMIN DASHBOARD</span>
+                </div>
+            </div>
+
+            <nav class="space-y-1">
+                <a href="admin-dashboard.html" class="admin-nav-link"><i class="fas fa-chart-pie w-5"></i> Dashboard</a>
+                <a href="admin-customers.html" class="admin-nav-link"><i class="fas fa-users w-5"></i> Customers</a>
+                <a href="admin-products.html" class="admin-nav-link"><i class="fas fa-box w-5"></i> Products</a>
+                <a href="admin-orders.html" class="admin-nav-link"><i class="fas fa-shopping-cart w-5"></i> Orders</a>
+                <a href="admin-categories.html" class="admin-nav-link"><i class="fas fa-th-large w-5"></i> Categories</a>
+                <a href="admin-coupons.html" class="admin-nav-link"><i class="fas fa-ticket-alt w-5"></i> Coupons</a>
+                <a href="admin-reviews.html" class="admin-nav-link"><i class="fas fa-star w-5"></i> Reviews</a>
+                <a href="admin-analytics.html" class="admin-nav-link active"><i class="fas fa-chart-line w-5"></i> Analytics</a>
+                <a href="admin-settings.html" class="admin-nav-link"><i class="fas fa-cog w-5"></i> Settings</a>
+            </nav>
+        </div>
+
+        <div class="pt-6 border-t border-slate-800">
+            <button onclick="handleAdminLogout()" class="w-full text-left admin-nav-link text-rose-400 hover:bg-rose-500/10">
+                <i class="fas fa-sign-out-alt w-5"></i> Admin Logout
+            </button>
+        </div>
+    </aside>
+
+    <main class="flex-grow p-6 md:p-10 space-y-8 overflow-x-hidden">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-6">
+            <div>
+                <h1 class="text-2xl font-bold text-slate-100">BUSINESS ANALYTICS</h1>
+                <p class="text-xs text-slate-400 mt-1">Revenue trends, category performance, and average order value metrics.</p>
+            </div>
+
+            <div class="flex gap-2">
+                <button class="px-3 py-1.5 bg-amber-500 text-slate-950 font-bold text-xs rounded-xl">TODAY</button>
+                <button class="px-3 py-1.5 bg-slate-800 text-slate-300 font-bold text-xs rounded-xl">7 DAYS</button>
+                <button class="px-3 py-1.5 bg-slate-800 text-slate-300 font-bold text-xs rounded-xl">30 DAYS</button>
+                <button class="px-3 py-1.5 bg-slate-800 text-slate-300 font-bold text-xs rounded-xl">THIS YEAR</button>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <div class="admin-stat-card">
+                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">AVERAGE ORDER VALUE (AOV)</span>
+                <h3 class="text-2xl font-bold font-mono text-slate-100 mt-1">₹13,031</h3>
+            </div>
+            <div class="admin-stat-card">
+                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">CONVERSION RATE</span>
+                <h3 class="text-2xl font-bold font-mono text-emerald-400 mt-1">4.2%</h3>
+            </div>
+            <div class="admin-stat-card">
+                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">TOP CATEGORY</span>
+                <h3 class="text-2xl font-bold font-mono text-amber-400 mt-1">Women's Silk</h3>
+            </div>
+        </div>
+
+        <div class="bg-[#0f172a] border border-[#1e293b] rounded-2xl p-6 space-y-4">
+            <h3 class="text-base font-bold text-slate-100">Top Selling Products</h3>
+            <div class="space-y-3 text-xs">
+                <div class="flex justify-between items-center bg-slate-950 p-3 rounded-xl border border-slate-800">
+                    <span class="font-bold text-slate-200">1. Linen Draped Shirt</span>
+                    <span class="font-mono text-amber-400 font-bold">24 Units Sold</span>
+                </div>
+                <div class="flex justify-between items-center bg-slate-950 p-3 rounded-xl border border-slate-800">
+                    <span class="font-bold text-slate-200">2. Silk Bias-Cut Slip Gown</span>
+                    <span class="font-mono text-amber-400 font-bold">18 Units Sold</span>
+                </div>
+                <div class="flex justify-between items-center bg-slate-950 p-3 rounded-xl border border-slate-800">
+                    <span class="font-bold text-slate-200">3. Handcrafted Calfskin Oxford Shoes</span>
+                    <span class="font-mono text-amber-400 font-bold">16 Units Sold</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="admin.js"></script>
+</body>
+</html>

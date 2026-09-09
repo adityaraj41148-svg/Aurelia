@@ -1,0 +1,126 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+/* ====================================================
+   AURELIA ADMIN PORTAL — MASTER SAAS DASHBOARD STYLES
+   ==================================================== */
+
+:root {
+    --admin-bg: #090d16;
+    --admin-card: #0f172a;
+    --admin-border: #1e293b;
+    --admin-text-main: #f8fafc;
+    --admin-text-muted: #94a3b8;
+    --admin-accent: #c5a059;
+    --admin-accent-hover: #b08a43;
+}
+
+body.admin-body {
+    background-color: var(--admin-bg);
+    color: var(--admin-text-main);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* Sidebar Navigation */
+.admin-sidebar {
+    background-color: var(--admin-card);
+    border-right: 1px solid var(--admin-border);
+}
+
+.admin-nav-link {
+    display: flex;
+    items-center: center;
+    gap: 0.75rem;
+    padding: 0.65rem 1rem;
+    border-radius: 0.75rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #94a3b8;
+    transition: all 0.2s ease;
+}
+
+.admin-nav-link:hover, .admin-nav-link.active {
+    background-color: rgba(197, 160, 89, 0.12);
+    color: #fbbf24;
+    border-left: 3px solid #c5a059;
+}
+
+/* Stat KPI Cards */
+.admin-stat-card {
+    background-color: var(--admin-card);
+    border: 1px solid var(--admin-border);
+    border-radius: 1rem;
+    padding: 1.25rem;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.admin-stat-card:hover {
+    border-color: rgba(197, 160, 89, 0.4);
+    transform: translateY(-2px);
+}
+
+/* Data Tables */
+.admin-table-container {
+    background-color: var(--admin-card);
+    border: 1px solid var(--admin-border);
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
+.admin-table {
+    width: 100%;
+    text-align: left;
+    border-collapse: collapse;
+    font-size: 0.8125rem;
+}
+
+.admin-table th {
+    background-color: #020617;
+    color: #94a3b8;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.6875rem;
+    letter-spacing: 0.05em;
+    padding: 0.875rem 1.25rem;
+    border-bottom: 1px solid var(--admin-border);
+}
+
+.admin-table td {
+    padding: 0.875rem 1.25rem;
+    border-bottom: 1px solid rgba(30, 41, 59, 0.6);
+    color: #e2e8f0;
+}
+
+.admin-table tr:hover td {
+    background-color: rgba(30, 41, 59, 0.4);
+}
+
+/* Status Badges */
+.status-badge-pending {
+    background-color: rgba(245, 158, 11, 0.15);
+    color: #fbbf24;
+    border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.status-badge-confirmed {
+    background-color: rgba(59, 130, 246, 0.15);
+    color: #60a5fa;
+    border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.status-badge-shipped {
+    background-color: rgba(168, 85, 247, 0.15);
+    color: #c084fc;
+    border: 1px solid rgba(168, 85, 247, 0.3);
+}
+
+.status-badge-delivered {
+    background-color: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.status-badge-cancelled {
+    background-color: rgba(244, 63, 94, 0.15);
+    color: #fb7185;
+    border: 1px solid rgba(244, 63, 94, 0.3);
+}
